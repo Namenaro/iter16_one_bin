@@ -47,3 +47,17 @@ def count_error_btw_two_samples(ground_true, prediction):
     for i in range(len(ground_true)):
         res+=(ground_true[i] - prediction[i])**2
     return res/len(ground_true)
+
+def plot_points_on_pic_first_red(pic, X,Y, colors=None):
+    if colors is None:
+        colors = 'green'
+    fig, ax = plt.subplots()
+    plt.imshow(pic, cmap='gray_r')
+    plt.scatter(X[0], Y[0], s=100, c='red', marker='o', alpha=0.4)
+    plt.scatter(X[1:], Y[1:], s=100, c=colors, marker='o', alpha=0.4)
+    return fig
+
+def plot_graph(X, Y):
+    fig, ax = plt.subplots()
+    ax.plot(X,Y, marker='o', markerfacecolor='blue', markersize=12, color='skyblue', linewidth=4)
+    return fig

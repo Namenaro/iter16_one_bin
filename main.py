@@ -6,6 +6,7 @@
 from data import *
 from clicker import *
 from characteristicity import *
+from logger import *
 
 
 def fit_A_event_diam(A, h_fixed, pics_train, pics_test):
@@ -20,13 +21,14 @@ def fit_A_event_diam(A, h_fixed, pics_train, pics_test):
     return grid_diams, powers
 
 
-
-
-
 def fit_h_u_rad(A_fixed, h, pics1, pics2, logger):
     pass
 
 def create_A_and_h(Ax, Ay, hx, hy, pic, A_sens_rad, h_sens_rad, h_u_rad):
+    A_etalon = make_measurement(pic,Ax,Ay,A_sens_rad)
+    A = BinaryUnit(u_radius=0, sensor_field_radius=A_sens_rad, etalon=A_etalon, event_diameter=None, dx=0,dy=0)
+    h_etalon = make_measurement(pic,hx, hy,h_sens_rad)
+    h = NonBinaryUnit(u_radius=h_u_rad, sensor_field_radius=h_sens_rad, etalon=h_etalon, dx=hx-Ax, dy=hy-Ay)
     return A, h
 
 
@@ -40,6 +42,14 @@ def exp0(A_sens_rad, h_sens_rad, h_u_rad, logger):
     A, h = create_A_and_h(Ax, Ay, hx, hy, pic, A_sens_rad, h_sens_rad, h_u_rad)
 
     grid_diams, powers = fit_A_event_diam(A, h, pics_train, pics_test)
+    logger = HtmlLogger("exp0-vary event diam")
+    logger.add_text("vary event diam on A:")
+    logger.add_text(str(vars(A)))
+    logger.add_text("characteristica=:")
+    logger.add_text(str(vars(h)))
+    logger.add_fig(plot_points_on_pic_first_red(pic, X,Y))
+    logger.add_fig(plot_graph(grid_diams, powers))
+    logger.close()
 
 
 
