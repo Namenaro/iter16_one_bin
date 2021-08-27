@@ -17,9 +17,11 @@ class NonBinaryUnit:
     def apply(self, pic, x, y):
         X, Y = get_coords_less_or_eq_raduis(x + self.dx, y + self.dy, self.u_radius)
         nearest_mean = make_measurement(pic, X[0], Y[0], self.sensor_field_radius)
+        best_i = 0
         for i in range(1, len(X)):
             mean = make_measurement(pic, X[i], Y[i], self.sensor_field_radius)
             if abs(mean - self.etalon) < abs(nearest_mean - self.etalon):
                 nearest_mean = mean
-        best_match = NonBinaryMatch(X[i], Y[i], nearest_mean)
+                best_i = i
+        best_match = NonBinaryMatch(X[best_i], Y[best_i], nearest_mean)
         return best_match

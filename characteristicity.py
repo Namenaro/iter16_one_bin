@@ -7,7 +7,7 @@ import numpy as np
 
 def measure_charactericity_for_non_bin(non_binary_h, binary, pics_train, pics_test, nbins):
     sample_size_unconditional = 200
-    sample_size_train = 90
+    sample_size_train = 20
     sample_size_test = 250
 
     # прикидываем условную и безусловную гистограмму non_binary_h
